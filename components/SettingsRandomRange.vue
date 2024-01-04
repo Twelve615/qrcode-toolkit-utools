@@ -88,10 +88,12 @@ const childNested = computed(() => {
         <div i-ri-arrow-up-s-line />
       </button>
     </OptionItem>
-    <OptionItem title="Min" :nested="childNested">
+    <!-- Min -->
+    <OptionItem title="最小值" :nested="childNested">
       <OptionSlider v-model="lower" :min="min" :max="upper" :step="step" />
     </OptionItem>
-    <OptionItem title="Max" :nested="childNested">
+    <!-- Min -->
+    <OptionItem title="最大值" :nested="childNested">
       <OptionSlider v-model="upper" :min="lower" :max="max" :step="step" />
     </OptionItem>
   </template>

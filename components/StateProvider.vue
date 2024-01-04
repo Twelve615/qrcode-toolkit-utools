@@ -69,7 +69,8 @@ onMounted(() => {
       @click="view = 'generator'"
     >
       <div i-ri-qr-code-line />
-      Generator
+      <!-- Generator -->
+      生成器
     </button>
     <button
       flex="~ gap-1.5 items-center" text-button
@@ -77,7 +78,8 @@ onMounted(() => {
       @click="view = 'compare'"
     >
       <div i-ri-compasses-2-line />
-      Compare
+      <!-- Compare -->
+      比较
     </button>
     <button
       flex="~ gap-1.5 items-center" text-button
@@ -85,7 +87,8 @@ onMounted(() => {
       @click="view = 'verify'"
     >
       <div i-ri-qr-scan-2-line />
-      Verify
+      <!-- Verify -->
+      验证
     </button>
     <button
       flex="~ gap-1.5 items-center" text-button
@@ -93,7 +96,8 @@ onMounted(() => {
       @click="view = 'camera'"
     >
       <div i-ri-camera-line />
-      Camera
+      <!-- Camera -->
+      相机
     </button>
     <div flex-auto />
     <div>
@@ -104,7 +108,8 @@ onMounted(() => {
       :class="view === 'credit' ? 'bg-secondary' : 'op50'"
       @click="view = 'credit'"
     >
-      Credits
+      <!-- Credits -->
+      贡献者
     </button>
   </div>
 

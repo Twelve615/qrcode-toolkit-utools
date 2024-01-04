@@ -63,7 +63,8 @@ function toggleFull() {
 
 <template>
   <template v-if="(typeof margin === 'number')">
-    <OptionItem title="Margin" div @reset="margin = 2">
+    <!-- Margin -->
+    <OptionItem title="边距" div @reset="margin = 2">
       <OptionSlider v-model="margin" :min="0" :max="20" :step="1" />
       <button
         icon-button-sm
@@ -74,7 +75,8 @@ function toggleFull() {
     </OptionItem>
   </template>
   <template v-else>
-    <OptionItem title="Margin" div @reset="margin = { top: 2, left: 2, right: 2, bottom: 2 }">
+    <!-- Margin -->
+    <OptionItem title="边距" div @reset="margin = { top: 2, left: 2, right: 2, bottom: 2 }">
       <div flex-auto />
       <button
         v-if="fullCustomizable"
@@ -92,16 +94,16 @@ function toggleFull() {
     </OptionItem>
 
     <template v-if="showFull && fullCustomizable">
-      <OptionItem title="Left" nested>
+      <OptionItem title="左" nested>
         <OptionSlider v-model="margin.left" :min="0" :max="20" :step="1" />
       </OptionItem>
-      <OptionItem title="Right" nested>
+      <OptionItem title="右" nested>
         <OptionSlider v-model="margin.right" :min="0" :max="20" :step="1" />
       </OptionItem>
-      <OptionItem title="Top" nested>
+      <OptionItem title="上" nested>
         <OptionSlider v-model="margin.top" :min="0" :max="20" :step="1" />
       </OptionItem>
-      <OptionItem title="Bottom" nested>
+      <OptionItem title="下" nested>
         <OptionSlider v-model="margin.bottom" :min="0" :max="20" :step="1" />
       </OptionItem>
     </template>

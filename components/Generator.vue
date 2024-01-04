@@ -195,35 +195,39 @@ watch(
 </script>
 
 <template>
-  <div grid="~ cols-[38rem_1fr] gap-2" lt-lg="flex flex-col-reverse">
+  <!-- 移除 lt-lg="flex flex-col-reverse" 这会使窗口较小时二维码占整个窗口 -->
+  <div grid="~ cols-[38rem_1fr] gap-2" >
     <div flex="~ col gap-2">
+      <!-- Text to encode -->
       <textarea
         v-model="state.text"
-        placeholder="Text to encode"
+        placeholder="要编码的文本"
         border="~ base rounded"
         bg-secondary px4 py2
       />
       <div border="~ base rounded" flex="~ col gap-2" p4>
-        <OptionItem title="Error Correction" div>
+        <!-- Error Correction -->
+        <OptionItem title="误差纠正" div>
           <OptionSelectGroup
             v-model="state.ecc"
             :options="['L', 'M', 'Q', 'H']"
           />
           <label flex="~ gap-2 items-center" ml2>
             <OptionCheckbox v-model="state.boostECC" />
-            <span text-sm op75>Boost ECC</span>
+            <!-- Boost ECC -->
+            <span text-sm op75>提升 ECC</span>
           </label>
         </OptionItem>
-
-        <OptionItem title="Mask Pattern">
+        <!-- Mask Pattern -->
+        <OptionItem title="蒙版样式">
           <OptionSelectGroup
             v-model="state.maskPattern"
             :options="[-1, 0, 1, 2, 3, 4, 5, 6, 7]"
             :titles="['Auto']"
           />
         </OptionItem>
-
-        <OptionItem title="Rotate" div>
+        <!-- Rotate -->
+        <OptionItem title="旋转" div>
           <OptionSelectGroup
             v-model="state.rotate"
             :options="[0, 90, 180, 270]"
@@ -232,16 +236,16 @@ watch(
         </OptionItem>
 
         <div border="t base" my1 />
-
-        <OptionItem title="Pixel Style">
+        <!-- Pixel Style -->
+        <OptionItem title="像素样式">
           <OptionSelectGroup
             v-model="state.pixelStyle"
             :options="PixelStyles"
             :classes="PixelStyleIcons"
           />
         </OptionItem>
-
-        <OptionItem :title="state.markers.length ? 'Marker 1' : 'Markers'">
+        <!-- 'Marker 1' : 'Markers' -->
+        <OptionItem :title="state.markers.length ? '标记 1' : '标记'">
           <div flex-auto />
           <button
             icon-button-sm
@@ -253,18 +257,21 @@ watch(
         </OptionItem>
 
         <template v-if="!state.markers.length">
-          <SettingsMarkerStyle :state="state" nested number="Marker" />
+          <!-- Marker -->
+          <SettingsMarkerStyle :state="state" nested number="标记" />
         </template>
         <template v-else>
           <SettingsMarkerStyle :state="state" nested />
-          <OptionItem title="Marker 2" />
+          <!-- Marker 2 -->
+          <OptionItem title="标记 2" />
           <SettingsMarkerStyle :state="state.markers[0]" nested />
-          <OptionItem title="Marker 3" />
+          <!-- Marker 3 -->
+          <OptionItem title="标记 3" />
           <SettingsMarkerStyle :state="state.markers[1]" nested />
           <div border="t base" my1 />
         </template>
-
-        <OptionItem v-if="qrcode?.version !== 1" title="Sub Markers">
+        <!-- Sub Markers -->
+        <OptionItem v-if="qrcode?.version !== 1" title="子标记">
           <OptionSelectGroup
             v-model="state.markerSub"
             :options="MarkerSubShapes"
@@ -278,38 +285,42 @@ watch(
           v-model="state.margin"
           :full-customizable="true"
         />
-
-        <OptionItem title="Margin Noise" description="Add some random data points to the margin">
+        <!-- Margin Noise -->
+        <OptionItem title="边缘噪声" description="在边距添加一些随机数据点">
           <OptionCheckbox v-model="state.marginNoise" />
         </OptionItem>
 
         <template v-if="state.marginNoise">
-          <OptionItem title="Noise Rate" nested description="Percentage of whether a black point should be placed">
+          <!-- Noise Rate -->
+          <OptionItem title="噪声比率" nested description="Percentage of whether a black point should be placed">
             <OptionSlider v-model="state.marginNoiseRate" :min="0" :max="1" :step="0.01" />
           </OptionItem>
-
+          <!-- Opacity -->
           <SettingsRandomRange
             v-model="state.marginNoiseOpacity"
-            title="Opacity"
+            title="不透明度"
             nested
             :min="0"
             :max="1"
             :step="0.01"
           />
         </template>
-        <OptionItem title="Safe Space">
+        <!-- Safe Space -->
+        <OptionItem title="安全空间">
           <OptionSelectGroup
             v-model="state.marginNoiseSpace"
             :options="['full', 'marker', 'minimal', 'extreme', 'none']"
           />
         </OptionItem>
-        <OptionItem title="Render Type">
+        <!-- Render Type -->
+        <OptionItem title="渲染类型">
           <OptionSelectGroup
             v-model="state.renderPointsType"
             :options="['all', 'function', 'data', 'guide', 'marker']"
           />
         </OptionItem>
-        <OptionItem title="Seed">
+        <!-- Seed -->
+        <OptionItem title="种子">
           <input
             v-model.number="state.seed" type="number"
             border="~ base rounded"
@@ -323,7 +334,8 @@ watch(
             <div i-ri-refresh-line />
           </button>
         </OptionItem>
-        <OptionItem title="Background" div>
+        <!-- Background -->
+        <OptionItem title="背景" div>
           <OptionColor v-if="state.backgroundImage?.startsWith('#')" v-model="state.backgroundImage" />
           <button v-else relative text-xs text-button>
             <img
@@ -332,7 +344,8 @@ watch(
             >
             <div i-ri-upload-line z-1 />
             <div z-1>
-              Upload
+            <!-- Upload -->
+              上传
             </div>
             <ImageUpload v-model="state.backgroundImage" />
           </button>
@@ -346,35 +359,36 @@ watch(
         </OptionItem>
 
         <div border="t base" my1 />
-
-        <OptionItem title="Colors" div @reset="() => { state.lightColor = '#ffffff'; state.darkColor = '#000000' }">
+        <!-- Colors -->
+        <OptionItem title="颜色" div @reset="() => { state.lightColor = '#ffffff'; state.darkColor = '#000000' }">
           <div flex="~ gap-2">
             <OptionColor v-model="state.lightColor" />
             <OptionColor v-model="state.darkColor" />
             <label flex="~ gap-2 items-center" ml2>
               <OptionCheckbox v-model="state.invert" />
-              <span text-sm op75>Invert</span>
+              <!-- Invert -->
+              <span text-sm op75>反相</span>
             </label>
           </div>
         </OptionItem>
 
         <div border="t base" my1 />
-
-        <OptionItem title="Min Version">
+        <!-- Min Version -->
+        <OptionItem title="最低版本">
           <OptionSlider v-model="state.minVersion" :min="1" :max="state.maxVersion" :step="1" />
         </OptionItem>
-
-        <OptionItem title="Max Version">
+        <!-- Max Version -->
+        <OptionItem title="最高版本">
           <OptionSlider v-model="state.maxVersion" :min="state.minVersion" :max="40" :step="1" />
         </OptionItem>
-
-        <OptionItem title="Pixel Size">
+        <!-- Pixel Size -->
+        <OptionItem title="像素大小">
           <OptionSlider v-model="state.scale" :min="1" :max="50" :step="1" unit="px" />
         </OptionItem>
 
         <div border="t base" my1 />
-
-        <OptionItem title="Effect">
+        <!-- Effect -->
+        <OptionItem title="效果">
           <OptionSelectGroup
             v-model="state.effect"
             :options="['none', 'crystalize', 'liquidify']"
@@ -382,24 +396,29 @@ watch(
         </OptionItem>
 
         <template v-if="state.effect === 'crystalize'">
-          <OptionItem title="Radius" nested>
+          <!-- Radius -->
+          <OptionItem title="半径" nested>
             <OptionSlider v-model="state.effectCrystalizeRadius" :min="1" :max="20" :step="0.5" />
           </OptionItem>
         </template>
         <template v-if="state.effect === 'liquidify'">
-          <OptionItem title="Distort Radius" nested>
+          <!-- Distort Radius -->
+          <OptionItem title="扭曲半径" nested>
             <OptionSlider v-model="state.effectLiquidifyDistortRadius" :min="1" :max="40" :step="1" />
           </OptionItem>
-          <OptionItem title="Blur Radius" nested>
+          <!-- Blur Radius -->
+          <OptionItem title="模糊半径" nested>
             <OptionSlider v-model="state.effectLiquidifyRadius" :min="1" :max="40" :step="1" />
           </OptionItem>
-          <OptionItem title="Threshold" nested @reset="state.effectLiquidifyThreshold = 128">
+          <!-- Threshold -->
+          <OptionItem title="阈值" nested @reset="state.effectLiquidifyThreshold = 128">
             <OptionSlider v-model="state.effectLiquidifyThreshold" :min="1" :max="254" :step="1" unit="/256" />
           </OptionItem>
         </template>
 
         <template v-if="state.effect !== 'none'">
-          <OptionItem title="Effect Timing">
+          <!-- Effect Timing -->
+          <OptionItem title="效果时机">
             <OptionSelectGroup
               v-model="state.effectTiming"
               :options="['before', 'after']"
@@ -408,15 +427,18 @@ watch(
         </template>
 
         <div border="t base" my1 />
-
-        <OptionItem title="Transform" />
-        <OptionItem title="Perspective X" nested @reset="state.transformPerspectiveX = 0">
+        <!-- Transform -->
+        <OptionItem title="变换" />
+        <!-- Perspective X -->
+        <OptionItem title="透视 X" nested @reset="state.transformPerspectiveX = 0">
           <OptionSlider v-model="state.transformPerspectiveX" :min="-0.5" :max="0.5" :step="0.01" :default="0" />
         </OptionItem>
-        <OptionItem title="Perspective Y" nested @reset="state.transformPerspectiveY = 0">
+        <!-- Perspective Y -->
+        <OptionItem title="透视 Y" nested @reset="state.transformPerspectiveY = 0">
           <OptionSlider v-model="state.transformPerspectiveY" :min="-0.5" :max="0.5" :step="0.01" :default="0" />
         </OptionItem>
-        <OptionItem title="Scale" nested @reset="state.transformScale = 1">
+        <!-- Scale -->
+        <OptionItem title="比例" nested @reset="state.transformScale = 1">
           <OptionSlider v-model="state.transformScale" :min="0.5" :max="2" :step="0.01" :default="1" />
         </OptionItem>
       </div>
@@ -426,14 +448,16 @@ watch(
           @click="downloadState()"
         >
           <div i-ri-download-2-line />
-          Save state
+          <!-- Save state -->
+          保存状态
         </button>
         <button
 
           relative text-sm op75 text-button hover:op100
         >
           <div i-ri-upload-2-line />
-          Load state
+          <!-- Load state -->
+          加载状态
           <input
             type="file" accept="application/json"
             absolute bottom-0 left-0 right-0 top-0 z-10
@@ -447,7 +471,8 @@ watch(
           @click="reset()"
         >
           <div i-ri-delete-bin-6-line />
-          Reset State
+          <!-- Reset State -->
+          重置状态
         </button>
       </div>
     </div>
@@ -466,19 +491,22 @@ watch(
         <div v-if="qrcode" border="~ base rounded" p3 pl6 pr0 flex="~ col gap-2">
           <div grid="~ gap-1 cols-6 items-center">
             <div text-sm op50>
-              Size
+              <!-- Size -->
+              大小
             </div>
             <div>
               {{ qrcode.size }}
             </div>
             <div text-sm op50>
-              Mask
+              <!-- Mask -->
+              蒙版
             </div>
             <div>
               {{ qrcode.maskPattern }}
             </div>
             <div text-sm op50>
-              Version
+              <!-- Version -->
+              版本
             </div>
             <div>
               {{ qrcode.version }}
@@ -486,13 +514,15 @@ watch(
           </div>
           <div v-if="generateQRCodeInfo" grid="~ gap-1 cols-[1.5fr_2fr_1fr_1.5fr] items-center">
             <div text-sm op50>
-              Dimension
+              <!-- Dimension -->
+              尺寸
             </div>
             <div text-sm>
               {{ generateQRCodeInfo.width }} x {{ generateQRCodeInfo.height }}
             </div>
             <div text-sm op50>
-              Aspect
+              <!-- Aspect -->
+              比例
             </div>
             <div text-sm>
               {{ getAspectRatio(generateQRCodeInfo.width, generateQRCodeInfo.height) }}
@@ -504,14 +534,16 @@ watch(
           @click="download()"
         >
           <div i-ri-download-line />
-          Download
+          <!-- Download -->
+          下载
         </button>
         <button
           py2 text-sm text-button
           @click="sendCompare()"
         >
           <div i-ri-send-backward />
-          Send to Compare
+          <!-- Send to Compare -->
+          发送到比较
         </button>
         <button
           v-if="hasParentWindow"
@@ -519,19 +551,24 @@ watch(
           @click="sendToWebUI()"
         >
           <div i-ri-file-upload-line />
-          Send to ControlNet
+          <!-- Send to ControlNet -->
+          发送到 ControlNet
         </button>
         <div v-if="mayNotScannable" border="~ amber-6/60 rounded" bg-amber-5:10 px3 py2 text-sm text-amber-6>
-          This QR Code may or may not be scannable. Please verify before using.
+          <!-- This QR Code may or may not be scannable. Please verify before using. -->
+          这个二维码可能是可扫描的，也可能是不可扫描的。 使用前请验证。
         </div>
         <div v-if="hasNonCenteredMargin" border="~ yellow-6/60 rounded" bg-yellow-5:10 px3 py2 text-sm text-yellow-6>
-          The <b>compare tab</b> does not support non-centered QR Code yet. If you generated with this QR Code, you'll need to verify the result manually.
+          <!-- The <b>compare tab</b> does not support non-centered QR Code yet. If you generated with this QR Code, you'll need to verify the result manually. -->
+          <b>比较选项卡</b>中不支持非剧中的二维码。 如果您使用此二维码生成，则需要手动验证结果。
         </div>
         <div v-if="state.transformPerspectiveX !== 0 || state.transformPerspectiveY !== 0 || state.transformScale !== 1" border="~ yellow-6/60 rounded" bg-yellow-5:10 px3 py2 text-sm text-yellow-6>
-          The <b>compare tab</b> does not support transformations. If you generated with this QR Code, you'll need to verify the result manually.
+          <!-- The <b>compare tab</b> does not support transformations. If you generated with this QR Code, you'll need to verify the result manually. -->
+          <b>比较选项卡</b>中不支持转换。 如果您使用此二维码生成，则需要手动验证结果。
         </div>
         <div v-if="state.renderPointsType !== 'all'" border="~ indigo/60 rounded" bg-indigo-5:10 px3 py2 text-sm text-indigo>
-          This is a partial QR Code. It does <b>not</b> contain all the necessary data to be scannable.
+          <!-- This is a partial QR Code. It does <b>not</b> contain all the necessary data to be scannable. -->
+          这是部分二维码。 它<b>不</b>包含可扫描的所有必要数据。
         </div>
       </div>
 
@@ -547,7 +584,8 @@ watch(
     >
       <div i-carbon-qr-code text-20 />
       <div text-xl>
-        Scan QR Code
+        <!-- Scan QR Code -->
+        扫描二维码
       </div>
     </div>
   </div>
