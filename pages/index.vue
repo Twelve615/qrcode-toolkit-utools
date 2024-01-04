@@ -31,31 +31,32 @@ const buildTime = useTimeAgo(config.public.buildTime as any)
       <StateProvider :key="storeIndex" :index="storeIndex" />
 
       <div flex-auto />
+      <!--
+           <div mt-15 flex="~ col gap-2">
+              <div>
+                <span op50>Anthony Fu's </span> <span font-600 op75>QR</span><span font-400 op65> Toolkit</span>
+              </div>
+              <div flex="~ gap-1 items-center">
+                <span i-ri-arrow-right-line ml1 inline-block h-1em op50 /><a op75 hover:op100 href="https://antfu.me/posts/ai-qrcode-101" target="_blank">How to Generate AI QR Code</a><br>
+              </div>
+              <div v-if="!hasParentWindow" flex="~ gap-1 items-center">
+                <span i-ri-arrow-right-line ml1 inline-block h-1em op50 />
+                <a
+                  href="https://github.com/antfu/sd-webui-qrcode-toolkit"
+                  target="_blank"
+                  flex="~ inline gap-1 items-center" op75 hover:op100
+                >Web UI Extension</a>
+              </div>
+              <div flex="~ gap-1 items-center">
+                <span i-ri-arrow-right-line ml1 inline-block h-1em op50 />
+                <a
+                  href="https://github.com/antfu/qrcode-toolkit/issues"
+                  target="_blank"
+                  flex="~ inline gap-1 items-center" op75 hover:op100
+                >Bug report / feature request</a>
+              </div>
+            </div>
 
-      <div mt-15 flex="~ col gap-2">
-        <div>
-          <span op50>Anthony Fu's </span> <span font-600 op75>QR</span><span font-400 op65> Toolkit</span>
-        </div>
-        <div flex="~ gap-1 items-center">
-          <span i-ri-arrow-right-line ml1 inline-block h-1em op50 /><a op75 hover:op100 href="https://antfu.me/posts/ai-qrcode-101" target="_blank">How to Generate AI QR Code</a><br>
-        </div>
-        <div v-if="!hasParentWindow" flex="~ gap-1 items-center">
-          <span i-ri-arrow-right-line ml1 inline-block h-1em op50 />
-          <a
-            href="https://github.com/antfu/sd-webui-qrcode-toolkit"
-            target="_blank"
-            flex="~ inline gap-1 items-center" op75 hover:op100
-          >Web UI Extension</a>
-        </div>
-        <div flex="~ gap-1 items-center">
-          <span i-ri-arrow-right-line ml1 inline-block h-1em op50 />
-          <a
-            href="https://github.com/antfu/qrcode-toolkit/issues"
-            target="_blank"
-            flex="~ inline gap-1 items-center" op75 hover:op100
-          >Bug report / feature request</a>
-        </div>
-      </div>
       <div>
         <span op50>If you find this app useful, </span>
         <a href="https://github.com/sponsors/antfu" target="_blank" op75 hover:text-rose hover:underline hover:op100>Sponsor to support my work</a>
@@ -90,6 +91,10 @@ const buildTime = useTimeAgo(config.public.buildTime as any)
         <div flex="~ gap-1 items-center" ml-3>
           <span op35>Made with </span> <a mt--2 href="https://nuxt.com" target="_blank" flex="~ inline gap-1 items-center" translate-y-0.9 op75 hover:op100><div i-logos-nuxt-icon /> <span font-bold op65>Nuxt</span></a><br>
         </div>
+      </div>
+      -->
+      <div flex="~ gap-3 items-center">
+        <p>Copyright (c) 2021-PRESENT <a href="https://github.com/antfu" target="_blank" op75 hover:underline hover:op100>Anthony Fu</a></p>
       </div>
     </div>
   </div>
