@@ -120,7 +120,8 @@ onUnmounted(dispose)
   <SafariWarning />
   <div flex="~ col gap-2">
     <div border="~ base rounded" flex="~ col gap-2" p4>
-      <OptionItem title="Camera" div>
+      <!-- Camera -->
+      <OptionItem title="摄像头" div>
         <OptionSelectGroup
           v-if="cameras.length"
           v-model="selectedCamera"
@@ -128,39 +129,46 @@ onUnmounted(dispose)
           :options="cameras.map(i => i.deviceId)"
         />
         <div v-else>
-          No camera founded
+          <!-- No camera founded -->
+          未发现摄像头
         </div>
       </OptionItem>
 
       <template v-if="selectedCamera">
-        <OptionItem title="View" div>
+        <!-- View -->
+        <OptionItem title="视图" div>
           <OptionSelectGroup
             v-model="state.cameraViewMode"
             :options="['oringal', 'processed']"
           />
         </OptionItem>
-        <OptionItem title="Mirror" div>
+        <!-- Mirror -->
+        <OptionItem title="镜像" div>
           <OptionCheckbox v-model="state.cameraMirror" />
         </OptionItem>
+        <!-- Sample Delay             Delay for a few milesecond before scaning the next frame. Lower value indicates more frequent scans. -->
         <OptionItem
-          title="Sample Delay" description="Delay for a few milesecond before scaning the next frame. Lower value indicates more frequent scans."
+          title="采样延迟" description="扫描下一帧前的几毫秒延迟。数值越小，扫描越频繁。"
           @reset="state.cameraSampleDelay = 100"
         >
           <OptionSlider v-model="state.cameraSampleDelay" :min="50" :max="1000" :default="100" :step="10" unit="ms" />
         </OptionItem>
 
         <div border="t base" my1 />
-
-        <OptionItem title="Grayscale">
+        <!-- Grayscale -->
+        <OptionItem title="灰度">
           <OptionCheckbox v-model="state.grayscale" />
         </OptionItem>
-        <OptionItem title="Contrast" @reset="state.contrast = 100">
+        <!-- Contrast -->
+        <OptionItem title="对比度" @reset="state.contrast = 100">
           <OptionSlider v-model="state.contrast" :min="0" :max="1000" :default="100" :step="10" unit="%" />
         </OptionItem>
-        <OptionItem title="Brightness" @reset="state.brightness = 100">
+        <!-- Brightness -->
+        <OptionItem title="亮度" @reset="state.brightness = 100">
           <OptionSlider v-model="state.brightness" :min="0" :max="1000" :default="100" :step="10" unit="%" />
         </OptionItem>
-        <OptionItem title="Blur">
+        <!-- Blur -->
+        <OptionItem title="模糊">
           <OptionSlider v-model="state.blur" :min="0" :max="10" :step="0.05" unit="px" />
         </OptionItem>
       </template>
@@ -191,7 +199,8 @@ onUnmounted(dispose)
           {{ result?.text }}
         </div>
         <button text-button @click="start()">
-          Continue
+          <!-- Continue -->
+          继续
         </button>
       </div>
     </div>
