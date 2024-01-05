@@ -330,13 +330,16 @@ const { isOverDropZone } = useDropZone(document.body, {
   <div flex="~ col gap-3">
     <div grid="~ cols-3 gap-2" mt8>
       <div text-center text-sm op50>
-        Upload
+        <!-- Upload -->
+        上传
       </div>
       <div text-center text-sm op50>
-        Preprocessed
+        <!-- Preprocessed -->
+        预处理
       </div>
       <div text-center text-sm op50>
-        Matched
+        <!-- Matched -->
+        匹配
       </div>
       <ImageDrop
         v-model="dataUrlScannerUpload"
@@ -395,16 +398,20 @@ const { isOverDropZone } = useDropZone(document.body, {
         "
       />
       <div v-if="error">
-        Error: {{ error }}
+        <!-- Error -->
+        错误: {{ error }}
       </div>
       <div v-else-if="loading" animate-pulse>
-        Loading models...
+        <!-- Loading models -->
+        加载模型中...
       </div>
       <div v-else-if="!dataUrlScannerUpload">
-        Upload a image to scan
+        <!-- Upload a image to scan -->
+        上传要扫描的图像
       </div>
       <div v-else-if="reading || controlling" animate-pulse>
-        Scanning... <span v-if="triesCount" text-xs op50>(x{{ triesCount }})</span>
+        <!-- Scanning -->
+        扫描中... <span v-if="triesCount" text-xs op50>(x{{ triesCount }})</span>
       </div>
       <template v-else-if="result?.text">
         <div font-mono>
@@ -416,7 +423,8 @@ const { isOverDropZone } = useDropZone(document.body, {
         </button>
       </template>
       <div v-else>
-        No QR code found
+        <!-- No QR code found -->
+        未找到二维码
       </div>
     </div>
 
@@ -433,27 +441,31 @@ const { isOverDropZone } = useDropZone(document.body, {
 
     <template v-if="dataUrlScannerUpload">
       <div border="~ base rounded" flex="~ col gap-2" p4>
-        <OptionItem title="Resize" description="Resize the image's short edge" @reset="state.resize = 300">
+        <!--               Resize               Resize the image's short edge -->
+        <OptionItem title="调整大小" description="调整图像短边的尺寸" @reset="state.resize = 300">
           <OptionSlider v-model="state.resize" :min="150" :max="1000" :step="10" unit="px" />
           <ReuseLock name="resize" />
         </OptionItem>
 
         <div border="t base" my1 />
-
-        <OptionItem title="Grayscale">
+        <!-- Grayscale -->
+        <OptionItem title="灰度">
           <OptionCheckbox v-model="state.grayscale" />
           <div flex-auto />
           <ReuseLock name="grayscale" />
         </OptionItem>
-        <OptionItem title="Contrast" @reset="state.contrast = 100">
+        <!-- Contrast -->
+        <OptionItem title="对比度" @reset="state.contrast = 100">
           <OptionSlider v-model="state.contrast" :min="0" :max="1000" :default="100" :step="10" unit="%" />
           <ReuseLock name="contrast" />
         </OptionItem>
-        <OptionItem title="Brightness" @reset="state.brightness = 100">
+        <!-- Brightness -->
+        <OptionItem title="亮度" @reset="state.brightness = 100">
           <OptionSlider v-model="state.brightness" :min="0" :max="1000" :default="100" :step="10" unit="%" />
           <ReuseLock name="brightness" />
         </OptionItem>
-        <OptionItem title="Blur">
+        <!-- Blur -->
+        <OptionItem title="模糊">
           <OptionSlider v-model="state.blur" :min="0" :max="10" :step="0.05" unit="px" />
           <ReuseLock name="blur" />
         </OptionItem>
@@ -465,7 +477,8 @@ const { isOverDropZone } = useDropZone(document.body, {
           @click="random()"
         >
           <div i-ri-refresh-line />
-          Randomize State
+          <!-- Randomize State -->
+          随机状态
         </button>
         <button
           text-sm op75 text-button hover:text-yellow hover:op100
@@ -474,7 +487,8 @@ const { isOverDropZone } = useDropZone(document.body, {
           @click="randomTries()"
         >
           <div i-ri-refresh-fill />
-          Random Tries (x50 times)
+          <!-- Random Tries (x50 times) -->
+          随机尝试 (x50 次)
         </button>
         <button
           v-if="result?.text"
@@ -484,10 +498,12 @@ const { isOverDropZone } = useDropZone(document.body, {
           @click="narrowDown()"
         >
           <div i-ri-align-vertically rotate-90 />
-          Narrow Down
+          <!-- Narrow Down -->
+          缩小范围
         </button>
         <div v-if="triesCount" text-xs op50>
-          {{ triesCount }} tries
+          <!-- tries -->
+          {{ triesCount }} 次
         </div>
         <div flex-auto />
         <button
@@ -495,14 +511,16 @@ const { isOverDropZone } = useDropZone(document.body, {
           @click="reset()"
         >
           <div i-ri-pencil-ruler-2-line />
-          Default
+          <!-- Default -->
+          默认设置
         </button>
         <button
           text-sm op75 text-button hover:text-orange hover:op100
           @click="emptyState()"
         >
           <div i-ri-blur-off-line />
-          No Preprocessing
+          <!-- No Preprocessing -->
+          无预处理
         </button>
       </div>
     </template>
@@ -511,16 +529,26 @@ const { isOverDropZone } = useDropZone(document.body, {
       <span i-ri-lightbulb-line flex-none text-lg text-yellow />
       <div flex="~ col gap-4">
         <p>
-          Try adjusting the preprocessing options to get the best result.
+          <!-- Try adjusting the preprocessing options to get the best result. -->
+          尝试调整预处理选项以获得最佳效果。
         </p>
         <p>
+          <!--
           This scanner uses the algorithm open sourced by WeChat, based on OpenCV.
           It uses two CNN-based models and provides much better recognizability than average scanners.
+          -->
+          该扫描仪使用了微信基于 OpenCV 开源的算法。
+          它使用两个基于 CNN 的模型，提供比普通扫描仪更好的识别能力。
         </p>
         <p>
+          <!--
           The detection and decoding is done completely local in your browser.
           This is made possible by compiling OpenCV with the WeChat's scanner into WebAssembly.
           If you are interested in learning more, check out <a href="https://github.com/antfu/qr-scanner-wechat" target="_blank" font-mono op75 hover:underline hover:op100>qr-scanner-wechat</a>.
+          -->
+          检测和解码完全在Utools本地完成。
+          这是通过使用微信扫描仪将 OpenCV 编译成 WebAssembly 来实现的。
+          如果您想了解更多信息，请访问 <a href="https://github.com/antfu/qr-scanner-wechat" target="_blank" font-mono op75 hover:underline hover:op100>qr-scanner-wechat</a>.
         </p>
       </div>
     </div>
@@ -528,7 +556,8 @@ const { isOverDropZone } = useDropZone(document.body, {
       <span i-ri-folder-2-line flex-none text-lg text-yellow />
       <div flex="~ col gap-4">
         <p>
-          Have a lot images to verify? Try <a href="https://github.com/antfu/qr-verify-cli" target="_blank" font-mono op75 hover:underline hover:op100>qr-verify</a> to do so in batch!
+          <!-- Have a lot images to verify? Try <a href="https://github.com/antfu/qr-verify-cli" target="_blank" font-mono op75 hover:underline hover:op100>qr-verify</a> to do so in batch! -->
+          有大量图片需要验证？ 尝试使用<a href="https://github.com/antfu/qr-verify-cli" target="_blank" font-mono op75 hover:underline hover:op100>qr-verify</a> 来批量验证!
         </p>
       </div>
     </div>
@@ -541,7 +570,8 @@ const { isOverDropZone } = useDropZone(document.body, {
     >
       <div i-carbon-qr-code text-20 />
       <div text-xl>
-        Scan Image
+        <!-- Scan Image -->
+        扫描图像
       </div>
     </div>
   </div>
