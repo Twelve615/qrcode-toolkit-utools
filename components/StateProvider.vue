@@ -117,10 +117,14 @@ onMounted(() => {
     <Generator :state="state" />
   </div>
   <div v-show="view === 'compare'" w-full>
+    <!-- 移动设备不支持此应用程序。请尝试使用更大的屏幕。
     <div v-if="!isLargeScreen" flex px20 py50 text-center op50>
       This app is not supported on mobile devices. Please try with a bigger screen.
     </div>
     <Compare v-else :state="state" />
+    -->
+    <!-- 不再对小屏幕进行限制 -->
+    <Compare :state="state" />
   </div>
   <div v-if="view === 'verify'" w-full>
     <Scanner :state="state" />

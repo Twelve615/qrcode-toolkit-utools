@@ -7,19 +7,20 @@ defineProps<{
 </script>
 
 <template>
-  <OptionItem title="Ambiguity Threshold" @reset="state.diffThreshold = 3">
+  <!-- Ambiguity Threshold -->
+  <OptionItem title="模糊阈值" @reset="state.diffThreshold = 3">
     <OptionSlider v-model="state.diffThreshold" :min="0.1" :max="20" :step="0.01" />
   </OptionItem>
-
-  <OptionItem title="Correction Opacity" @reset="state.correctionOpacity = 1">
+  <!-- Correction Opacity -->
+  <OptionItem title="校正不透明度" @reset="state.correctionOpacity = 1">
     <OptionSlider v-model="state.correctionOpacity" :min="0" :max="4" :step="0.01" />
   </OptionItem>
-
-  <OptionItem title="Correction Blur" @reset="state.correctionBlur = 0">
+  <!-- Correction Blur -->
+  <OptionItem title="校正模糊" @reset="state.correctionBlur = 0">
     <OptionSlider v-model="state.correctionBlur" :min="0" :max="20" :step="0.05" />
   </OptionItem>
-
-  <OptionItem title="Correction Blend">
+  <!-- Correction Blend -->
+  <OptionItem title="校正混合">
     <OptionSelectGroup
       v-model="state.correctionBlendMode"
       :options="['none', 'overlay', 'darken', 'lighten', 'difference']"

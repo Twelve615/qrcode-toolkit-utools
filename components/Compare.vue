@@ -278,25 +278,30 @@ function toggleHighContrast() {
       </div>
 
       <div v-if="dataurl" border="~ base rounded" flex="~ col gap-2" p4>
-        <OptionItem title="Grayscale">
+        <!-- Grayscale -->
+        <OptionItem title="灰度">
           <OptionCheckbox v-model="state.grayscale" />
         </OptionItem>
-        <OptionItem title="Contrast" @reset="state.contrast = 100">
+        <!-- Contrast -->
+        <OptionItem title="对比度" @reset="state.contrast = 100">
           <OptionSlider v-model="state.contrast" :min="0" :max="1000" :step="10" unit="%" :default="100" />
         </OptionItem>
-        <OptionItem title="Brightness" @reset="state.brightness = 100">
+        <!-- Brightness -->
+        <OptionItem title="亮度" @reset="state.brightness = 100">
           <OptionSlider v-model="state.brightness" :min="0" :max="1000" :step="10" unit="%" :default="100" />
         </OptionItem>
-        <OptionItem title="Blur">
+        <!-- Blur -->
+        <OptionItem title="模糊">
           <OptionSlider v-model="state.blur" :min="0" :max="10" :step="1" unit="px" />
         </OptionItem>
-        <OptionItem title="Pixelate">
+        <!-- Pixelate -->
+        <OptionItem title="像素化">
           <OptionCheckbox v-model="state.pixelView" />
         </OptionItem>
 
         <div border="t base" my1 />
-
-        <OptionItem title="Grid" description="Toggle Grid View">
+        <!--              Grid                Toggle Grid View -->
+        <OptionItem title="网格" description="切换网格视图">
           <OptionCheckbox v-model="state.grid" />
           <div flex-auto />
           <button
@@ -305,33 +310,39 @@ function toggleHighContrast() {
             @click="showGridHelper = true"
           >
             <div i-ri-artboard-2-line />
-            Align Grid
+            <!-- Align Grid -->
+            对齐网格
           </button>
         </OptionItem>
-        <OptionItem title="Grid Size" nested>
+        <!-- Grid Size -->
+        <OptionItem title="网格大小" nested>
           <OptionSlider v-model="state.gridSize" :min="10" :max="100" :step="1" />
         </OptionItem>
         <SettingsMargin v-model="state.gridMarginSize" />
         <template v-if="state.grid">
-          <OptionItem title="Opacity" nested>
+          <!-- Opacity -->
+          <OptionItem title="不透明度" nested>
             <OptionSlider v-model="state.gridOpacity" :min="0" :max="1" :step="0.01" />
           </OptionItem>
-          <OptionItem title="Color" nested>
+          <!-- Color -->
+          <OptionItem title="颜色" nested>
             <OptionColor v-model="state.gridColor" />
           </OptionItem>
         </template>
 
         <template v-if="dataUrlQRCode">
           <div border="t base" my1 />
-
-          <OptionItem title="Overlay">
+          <!-- Overlay -->
+          <OptionItem title="叠加">
             <OptionCheckbox v-model="state.overlay" />
           </OptionItem>
           <template v-if="state.overlay">
-            <OptionItem title="Opacity" nested>
+            <!-- Opacity -->
+            <OptionItem title="不透明度" nested>
               <OptionSlider v-model="state.overlayOpacity" :min="0" :max="1" :step="0.01" />
             </OptionItem>
-            <OptionItem title="Blend Mode" nested>
+            <!-- Blend Mode -->
+            <OptionItem title="混合模式" nested>
               <OptionSelectGroup
                 v-model="state.overlayBlendMode"
                 :options="['normal', 'overlay', 'darken', 'lighten', 'difference']"
@@ -346,21 +357,24 @@ function toggleHighContrast() {
           text-sm op75 text-button hover:text-red hover:op100
           @click="reset()"
         >
-          Reset State
+          <!-- Reset State -->
+          重置状态
         </button>
       </div>
 
       <div grid="~ cols-[1fr_max-content_1fr] gap-4" border="~ base rounded" px2 py8>
         <div flex="~ col items-center gap-2">
           <div text-sm op75>
-            Target Image
+            <!-- Target Image -->
+            目标图像
           </div>
           <ImageDrop v-model="dataurl" title="Target image" />
         </div>
         <div border="l base" />
         <div flex="~ col gap-2 items-center">
           <div text-sm op75>
-            Source QR Code
+            <!-- Source QR Code -->
+            源二维码
           </div>
           <ImageDrop
             v-model="dataUrlQRCode"
@@ -372,7 +386,8 @@ function toggleHighContrast() {
             @click="sendQRCodeToCompare(fullState)"
           >
             <div i-ri-qr-code-line />
-            Apply from generator
+            <!-- Apply from generator -->
+            从生成器获取
           </button>
         </div>
       </div>
@@ -384,18 +399,21 @@ function toggleHighContrast() {
         <div text-sm flex="~ items-center gap-2">
           <button relative text-button>
             <div i-ri-upload-line />
-            Upload QR Code
+            <!-- Upload QR Code -->
+            上传二维码
             <ImageUpload v-model="dataUrlQRCode" />
           </button>
           <div>
-            to start comparing
+            <!-- to start comparing -->
+            开始比较
           </div>
         </div>
       </template>
       <template v-else-if="!diff">
         <div flex="~ items-center gap-2" animate-pulse text-center>
           <div>
-            Loading...
+            <!-- Loading... -->
+            加载中...
           </div>
         </div>
       </template>
@@ -439,16 +457,20 @@ function toggleHighContrast() {
         </div>
         <div grid="~ cols-[250px_110px]">
           <div op50>
-            Average luminance
+            <!-- Average luminance -->
+            平均亮度
           </div><div>{{ (diff.avarageLuminance / 255 * 100).toFixed(1) }}%</div>
           <div op50>
-            Average luminance for Light
+            <!-- Average luminance for Light -->
+            浅色平均亮度
           </div><div>{{ (diff.lightLuminance / 255 * 100).toFixed(1) }}%</div>
           <div op50>
-            Average luminance for Dark
+            <!-- Average luminance for Dark -->
+            深色平均亮度
           </div><div>{{ (diff.darkLuminance / 255 * 100).toFixed(1) }}%</div>
           <div op50>
-            Mismatch nodes
+            <!-- Mismatch nodes -->
+            不匹配节点
           </div><div>{{ diff.mismatchDark.length + diff.mismatchLight.length }} / {{ diff.mainSegments.length }}</div>
         </div>
 
@@ -462,7 +484,8 @@ function toggleHighContrast() {
               @pointerleave="highlightMismatch = false"
             >
               <div i-ri-bring-to-front />
-              Preview Correction
+              <!-- Preview Correction -->
+              预览修正
             </button>
             <button
               text-sm text-button
@@ -470,14 +493,16 @@ function toggleHighContrast() {
               @pointerleave="highlightMismatch = false"
             >
               <div i-ri-search-2-line />
-              Highlight Mistmatch
+              <!-- Highlight Mistmatch -->
+              高亮不匹配
             </button>
             <button
               text-sm text-button
               @click="showDownloadDialog = true"
             >
               <div i-ri-download-line />
-              Download
+              <!-- Download -->
+              下载
             </button>
           </div>
         </template>
@@ -493,7 +518,8 @@ function toggleHighContrast() {
         <template v-if="diff.mismatchLight.length">
           <div my2 h-1px w-20 border-t border-base />
           <div op75>
-            Dark Mismatch ({{ diff.mismatchLight.length }})
+            <!-- Dark Mismatch -->
+            暗色不匹配 ({{ diff.mismatchLight.length }})
           </div>
           <div flex="~ wrap gap-1">
             <div v-for="s in diff.mismatchLight" :key="s.index">
@@ -508,7 +534,8 @@ function toggleHighContrast() {
         <template v-if="diff.mismatchDark.length">
           <div my2 h-1px w-20 border-t border-base />
           <div op75>
-            Light Mismatch ({{ diff.mismatchDark.length }})
+            <!-- Dark Mismatch -->
+            亮色不匹配 ({{ diff.mismatchDark.length }})
           </div>
           <div flex="~ wrap gap-1">
             <div v-for="s in diff.mismatchDark" :key="s.index">
@@ -531,42 +558,50 @@ function toggleHighContrast() {
       :style="{ right: 'calc(100% + 1rem)' }"
     >
       <VTooltip placement="left" distance="10">
-        <button icon-button title="Toggle grid" @click="state.grid = !state.grid">
+        <!-- Toggle grid -->
+        <button icon-button title="切换网格" @click="state.grid = !state.grid">
           <div i-ri-artboard-2-line :class="state.grid ? '' : 'op30'" />
         </button>
         <template #popper>
           <div text-sm>
-            Toggle Grid View
+            <!-- Toggle Grid View -->
+            切换网格视图
           </div>
         </template>
       </VTooltip>
       <VTooltip placement="left" distance="10">
-        <button icon-button title="Toggle overlay" @click="state.overlay = !state.overlay">
+        <!-- Toggle overlay -->
+        <button icon-button title="切换叠加" @click="state.overlay = !state.overlay">
           <div i-ri-qr-code-fill :class="state.overlay ? '' : 'op30'" />
         </button>
         <template #popper>
           <div text-sm>
-            Toggle QR Code Overlay
+            <!-- Toggle QR Code Overlay -->
+            切换二维码叠加
           </div>
         </template>
       </VTooltip>
       <VTooltip placement="left" distance="10">
-        <button icon-button title="Toggle high contrast" @click="toggleHighContrast()">
+        <!-- Toggle high contrast -->
+        <button icon-button title="切换高对比度" @click="toggleHighContrast()">
           <div i-ri-contrast-line :class="state.grayscale ? '' : 'op30'" />
         </button>
         <template #popper>
           <div text-sm>
-            Toggle High Contrast
+            <!-- Toggle High Contrast -->
+            切换高对比度
           </div>
         </template>
       </VTooltip>
       <VTooltip v-if="imageSegments" placement="left" distance="10">
-        <button icon-button title="Toggle high contrast" @click="state.pixelView = !state.pixelView">
+        <!-- Toggle Pixel View -->
+        <button icon-button title="切换像素视图" @click="state.pixelView = !state.pixelView">
           <div i-ri-grid-line :class="state.pixelView ? '' : 'op30'" />
         </button>
         <template #popper>
           <div text-sm>
-            Toggle Pixel View
+            <!-- Toggle Pixel View -->
+            切换像素视图
           </div>
         </template>
       </VTooltip>
@@ -580,7 +615,8 @@ function toggleHighContrast() {
         </div>
         <template #popper>
           <div text-sm>
-            Upload Image
+            <!-- Upload Image -->
+            上传图片
           </div>
         </template>
       </VTooltip>
@@ -602,7 +638,8 @@ function toggleHighContrast() {
     >
       <div i-carbon-image text-20 />
       <div text-xl>
-        Upload as target image
+        <!-- Upload as target image -->
+        上传目标图像
       </div>
     </div>
     <div
@@ -612,7 +649,8 @@ function toggleHighContrast() {
     >
       <div i-carbon-qr-code text-20 />
       <div text-xl>
-        Upload as QR Code reference
+        <!-- Upload as QR Code reference -->
+        上传参考二维码
       </div>
     </div>
   </div>
