@@ -40,7 +40,8 @@ function apply() {
     />
     <div class="relative z-10 max-w-full w-[35rem] rounded-lg p-4 bg-base" flex="~ col gap-4" border="~ base">
       <h1 text-xl>
-        Align Grid
+        <!-- Align Grid -->
+        对齐网格
       </h1>
       <div border="~ base rounded-lg" relative aspect-ratio-1 of-hidden>
         <img
@@ -61,12 +62,17 @@ function apply() {
       </div>
 
       <p>
+        <!--
         Slide the Grid slider to make the red grid lines align with all the pixel.
         Slide the Margin slider to make the green box align with the QR Code body.
+        -->
+        滑动网格滑块，使红色网格线与所有像素对齐。
+        滑动边距滑块，使绿色框与二维码主体对齐。
       </p>
 
       <div flex="~ col gap-2">
-        <OptionItem title="Grid">
+        <!-- Grid -->
+        <OptionItem title="网格">
           <OptionSlider v-model="gridSize" :min="0" :max="50" :step="1" />
         </OptionItem>
 
@@ -75,10 +81,12 @@ function apply() {
 
       <div flex="~ gap-2 justify-end" mt-5>
         <button px5 op75 text-button @click="cancel()">
-          Cancel
+          <!-- Cancel -->
+          取消
         </button>
         <button w-25 px5 text-button @click="apply()">
-          Apply
+          <!-- Apply -->
+          应用
         </button>
       </div>
     </div>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { deepMerge } from '@antfu/utils'
+import UtoolsPresetManagement from "~/components/UtoolsPresetManagement.vue";
 import { sendParentEvent } from '~/logic/messaging'
 import { dataUrlScannerUpload, defaultState, hasParentWindow, isLargeScreen, showGridHelper, storeIndex } from '~/logic/state'
 import { view } from '~/logic/view'
@@ -100,17 +101,8 @@ onMounted(() => {
       相机
     </button>
     <div flex-auto />
-    <div>
-      <a href="https://antfu.me" target="_blank" op75 hover:underline hover:op100>Anthony Fu</a><span op50>'s QR Toolkit</span>
-    </div>
-    <button
-      flex="~ gap-1.5 items-center" ml2 text-sm text-button
-      :class="view === 'credit' ? 'bg-secondary' : 'op50'"
-      @click="view = 'credit'"
-    >
-      <!-- Credits -->
-      贡献者
-    </button>
+    <!-- Utools预设管理 -->
+    <UtoolsPresetManagement :state="state" />
   </div>
 
   <div v-show="view === 'generator'" w-full>
