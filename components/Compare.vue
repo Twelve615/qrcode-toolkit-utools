@@ -132,7 +132,8 @@ function onSegmentLeave(segment: Segment) {
 
 function reset() {
   // eslint-disable-next-line no-alert
-  if (confirm('Are you sure to reset all state?'))
+  // Are you sure to reset all state?
+  if (confirm('您确定重置所有状态吗？'))
     Object.assign(state.value, defaultCompareState())
 }
 
