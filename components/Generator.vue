@@ -38,7 +38,8 @@ function download() {
 
 function reset() {
   // eslint-disable-next-line no-alert
-  if (confirm('Are you sure to reset all state?'))
+  // Are you sure to reset all state?
+  if (confirm('您确定重置所有状态吗？'))
     Object.assign(state.value, defaultGeneratorState())
 }
 
@@ -72,7 +73,8 @@ async function readState(e: Event) {
   try {
     const data = JSON.parse(text)
     // eslint-disable-next-line no-alert
-    if (confirm('Are you sure to override the state with file uploaded?')) {
+    // Are you sure to override the state with file uploaded?
+    if (confirm('您确定使用上传的文件覆盖状态吗？')) {
       const keys = Object.keys(state.value)
       for (const key of keys) {
         if (key in data)
@@ -83,7 +85,8 @@ async function readState(e: Event) {
   }
   catch (e) {
     // eslint-disable-next-line no-alert
-    alert('Invalid JSON file')
+    // Invalid JSON file
+    alert('无效的JSON文件')
   }
 }
 
