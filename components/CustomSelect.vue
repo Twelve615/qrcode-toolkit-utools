@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineEmits, defineProps, ref } from 'vue'
+import { defineEmits, defineProps, ref, toRefs, watch } from 'vue'
 import type { Option } from "~/logic/CustomOption"
 
 interface Props {
@@ -19,15 +19,40 @@ const selectedOption = ref<Option | null>(null)
 // 初始化时设置默认选中项（如果有）
 onMounted(() => {
   if (props?.options.length) {
-    if (selectedValue?.value) {
+    if (props?.value) {
       props.options.forEach((option) => {
-        if (option.value === selectedValue.value) {
+        if (option.value === props.value)
           selectedOption.value = option
-          selectedLabel.value = option.label
-          selectedValue.value = option.value
-        }
       })
+      if (selectedOption.value) {
+        selectOption(selectedOption.value)
+      }
+      else if (!props.value) {
+        // 如果没有匹配到任何选项且 value 为空，则清除已选中项
+        selectOption({ label: '', value: '', checked: false })
+      }
     }
+  }
+})
+// 将prop转换为响应式引用以便观察其变化
+const { options } = toRefs(props)
+
+// 监听prop的变化
+watch(options, (newValue, oldValue) => {
+  if (newValue?.length) {
+    let f = true
+    newValue.forEach((option) => {
+      if (selectedValue?.value) {
+        if (option.value === selectedValue.value) {
+          selectOption(option)
+          f = false
+        }
+      }
+    })
+    if (f)
+      selectOption({ label: '', value: '' })
+  } else {
+    selectOption({ label: '', value: '' })
   }
 })
 
