@@ -73,9 +73,9 @@ window.aquSetDef = (obj) => {
             def.data = id
             return utools.db.put(def)
         } else {
-            return utools.db.put({'_id': defId, 'data': id}) 
+            return utools.db.put({'_id': defId, 'data': id})
         }
-            
+
     } else {
         return res
     }
@@ -105,4 +105,10 @@ window.aquAllOption = () => {
 function getAllData() {
     let allData = utools.db.allDocs(presetPrefix);
     return allData ? allData : [];
+}
+
+// --------------------------------------------
+// 打开浏览器
+window.ubOpen = (url) => {
+    utools.shellOpenExternal(url)
 }

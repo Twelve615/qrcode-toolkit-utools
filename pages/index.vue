@@ -4,6 +4,10 @@ import {view} from "~/logic/view";
 
 const config = useRuntimeConfig()
 const buildTime = useTimeAgo(config.public.buildTime as any)
+
+function gotoUrl(url: string) {
+  window.ubOpen(url)
+}
 </script>
 
 <template>
@@ -96,11 +100,11 @@ const buildTime = useTimeAgo(config.public.buildTime as any)
       -->
       <div flex="~ gap-2 items-center wrap">
         <div>
-          <p>Copyright (c) 2021-PRESENT <a href="https://github.com/antfu" target="_blank" op75 hover:underline hover:op100>Anthony Fu</a></p>
+          <p>Copyright (c) 2021-PRESENT <a @click='gotoUrl("https://github.com/antfu")' cursor-pointer target="_blank" op75 hover:underline hover:op100>Anthony Fu</a></p>
         </div>
         <div flex-auto />
         <div>
-          <a href="https://antfu.me" target="_blank" op75 hover:underline hover:op100>Anthony Fu</a><span op50>'s QR Toolkit</span>
+          <a @click='gotoUrl("https://antfu.me")' cursor-pointer target="_blank" op75 hover:underline hover:op100>Anthony Fu</a><span op50>'s QR Toolkit</span>
         </div>
         <button
             flex="~ gap-1.5 items-center" ml2 text-sm text-button
