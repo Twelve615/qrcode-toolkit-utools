@@ -1,0 +1,12 @@
+{
+	"main": "index.html",
+	"logo": "logo.png",
+	"preload": "preload.js",
+	"features": [
+		{
+			"code": "qrKit",
+			"explain": "二维码工具箱",
+			"cmds":["qr", "qrcode", "qrToolkit", "qrkit"]
+		}
+	]
+}
