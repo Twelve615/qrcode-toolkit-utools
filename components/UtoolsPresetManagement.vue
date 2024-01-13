@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { defineProps, ref } from 'vue'
+import { deepMerge } from '@antfu/utils'
 import type { Option } from '~/logic/CustomOption'
 import type { State } from '~/logic/types'
 import type { UtoolsData } from '~/logic/UtoolsData'
-import { defaultState, storeIndex } from '~/logic/state'
-import { deepMerge } from '@antfu/utils'
+import { defaultState } from '~/logic/state'
 
 interface Props {
   state: State
