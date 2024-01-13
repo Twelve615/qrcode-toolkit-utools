@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineEmits, defineProps, ref, toRefs, watch } from 'vue'
-import type { Option } from "~/logic/CustomOption"
+import type { Option } from '~/logic/CustomOption'
 
 interface Props {
   options: Option[]
@@ -42,8 +42,8 @@ watch(options, (newValue, oldValue) => {
   if (newValue?.length) {
     let f = true
     newValue.forEach((option) => {
-      if (selectedValue?.value) {
-        if (option.value === selectedValue.value) {
+      if (props.value) {
+        if (option.value === props.value) {
           selectOption(option)
           f = false
         }
