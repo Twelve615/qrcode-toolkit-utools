@@ -105,6 +105,8 @@ export function defaultScannerState(): ScannerState {
 
 export function defaultState(): State {
   return {
+    aquLabel: '',
+    aquValue: '',
     qrcode: defaultGeneratorState(),
     compare: defaultCompareState(),
     scanner: defaultScannerState(),

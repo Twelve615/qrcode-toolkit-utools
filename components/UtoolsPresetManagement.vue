@@ -3,8 +3,9 @@ import { defineProps, ref } from 'vue'
 import type { Option } from '~/logic/CustomOption'
 import type { State } from '~/logic/types'
 import type { UtoolsData } from '~/logic/UtoolsData'
-import { storeIndex } from '~/logic/state'
+import {defaultState, storeIndex} from '~/logic/state'
 import {def} from "@vue/shared";
+import {deepMerge} from "@antfu/utils";
 
 interface Props {
   state: State
@@ -98,10 +99,33 @@ function savePreset() {
     $toast.success('保存成功')
   getAquOptions()
 }
+// 遍历LocalStorage并删除lable与value
+function removeLocalStorageOption(value) {
+  // 10来自首页设置的 VTooltip 的数量
+  for (let i = 0; i < 10; i++) {
+    useLocalStorage<State>(
+      `qrd-state-${i}`,
+      defaultState(),
+      {
+        mergeDefaults(storageValue, defaults) {
+          if (storageValue?.aquValue) {
+            if (storageValue.aquValue === value) {
+              return deepMerge({}, defaults)
+            }
+          }
+          return storageValue
+        },
+      },
+    )
+  }
+}
 // 删除
 function removePreset() {
-  const res = window.aquRemove(copVueObj(selectData.value))
+  var selectPreset = copVueObj(selectData.value);
+  const res = window.aquRemove(selectPreset)
   if (res!.ok) {
+    // 删除 useLocalStorage中的内容
+    removeLocalStorageOption(selectPreset)
     state.value.aquValue = undefined
     state.value.aquLabel = undefined
     updateTitle.value = ''
