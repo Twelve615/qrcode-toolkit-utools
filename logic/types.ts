@@ -176,6 +176,8 @@ export interface State {
   compare: ComparionState
   scanner: ScannerState
   uploaded: UploadState
+  aquLabel: string
+  aquValue: string
 }
 
 export interface Segment {

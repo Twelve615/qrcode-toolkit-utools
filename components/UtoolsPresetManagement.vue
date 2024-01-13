@@ -3,6 +3,8 @@ import { defineProps, ref } from 'vue'
 import type { Option } from '~/logic/CustomOption'
 import type { State } from '~/logic/types'
 import type { UtoolsData } from '~/logic/UtoolsData'
+import { storeIndex } from '~/logic/state'
+import {def} from "@vue/shared";
 
 interface Props {
   state: State
@@ -10,7 +12,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const { $toast } = useNuxtApp()
-const state = computed(() => props.state.qrcode)
+const state = computed(() => props.state)
 
 const optionsExample: Ref<Option[]> = ref([])
 let selectData: Option = {
@@ -28,15 +30,22 @@ onBeforeMount(() => {
   initOption()
 })
 
-function initOption() {
+watch(
+  () => state.value,
+  (newValue, oldValue) => {
+    defPreset.value = newValue.aquValue
+  },
+  { immediate: true },
+)
+
+function getAquOptions() {
   optionsExample.value = window.aquAllOption()
-  if (optionsExample.value.length > 0) {
-    optionsExample.value.forEach((item: Option) => {
-      if (item.checked) {
-        defPreset.value = item.value
-      }
-    })
-  }
+}
+
+function initOption() {
+  getAquOptions()
+  if (state.value.aquValue)
+    defPreset.value = state.value.aquValue
 }
 
 function copVueObj(obj: any) {
@@ -87,7 +96,7 @@ function savePreset() {
     $toast.error(res.message)
   else
     $toast.success('保存成功')
-  initOption()
+  getAquOptions()
 }
 // 删除
 function removePreset() {
@@ -100,16 +109,7 @@ function removePreset() {
     selectData.value = ''
     $toast.success('删除成功')
   }
-  initOption()
-}
-// 设为默认
-function setDef() {
-  const res = window.aquSetDef(copVueObj(state.value))
-  if (res!.ok)
-    $toast.success('设置成功')
-  else
-    $toast.error(res.message)
-  initOption()
+  getAquOptions()
 }
 
 function openUpdateModal(title: string) {
@@ -120,8 +120,7 @@ function openUpdateModal(title: string) {
       return
     }
   }
-  else
-    updateTitle.value = ''
+  else { updateTitle.value = '' }
   updateModalTitle.value = title
   isUpdateModalVisible.value = true
 }
@@ -141,21 +140,19 @@ function handleConfirm() {
   }
   if (updateModalTitle.value === '新建预设') {
     const res = addPreset(updateTitle.value)
-    if (res.ok)
+    if (res.ok) {
+      defPreset.value = res.id
+      getAquOptions()
       $toast.success('新建成功')
-    else
-      $toast.error(res.message)
+    }
+    else { $toast.error(res.message) }
   }
-  initOption()
   handleCancel()
 }
 </script>
 
 <template>
   <div flex="~ gap-2 items-center wrap">
-    <button flex="~ gap-2 items-center" text-sm icon-button title="设置当前为默认(下次打开时直接使用此配置)" @click="setDef">
-      <i i-ri-magic-line />
-    </button>
     <CustomSelect :options="optionsExample" :value="defPreset" placeholder="请选择预设" @change="changSelect" />
     <button flex="~ gap-2 items-center" text-sm icon-button title="保存预设" @click="savePreset">
       <i i-ri-save-3-fill />
