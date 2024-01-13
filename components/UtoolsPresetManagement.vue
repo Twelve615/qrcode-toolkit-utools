@@ -120,7 +120,7 @@ function removeLocalStorageOption(value) {
 }
 // 删除
 function removePreset() {
-  var selectPreset = copVueObj(selectData.value);
+  const selectPreset = copVueObj(selectData.value);
   const res = window.aquRemove(selectPreset)
   if (res!.ok) {
     // 删除 useLocalStorage中的内容
