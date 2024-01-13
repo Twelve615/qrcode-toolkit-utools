@@ -4,7 +4,7 @@ import type { Option } from '~/logic/CustomOption'
 import type { State } from '~/logic/types'
 import type { UtoolsData } from '~/logic/UtoolsData'
 import { defaultState, storeIndex } from '~/logic/state'
-import { deepMerge } from "@antfu/utils"
+import { deepMerge } from '@antfu/utils'
 
 interface Props {
   state: State
