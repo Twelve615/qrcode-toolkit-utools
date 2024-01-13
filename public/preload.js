@@ -48,39 +48,6 @@ window.aquRemove = (id) => {
     return utools.db.remove(id)
 }
 
-// 设置默认选项
-window.aquSetDef = (obj) => {
-    let id = obj[presetValue]
-    if(!id) {
-        return {ok: false, message: '当前没有选中的预设'};
-    }
-    let def = utools.db.get(defId)
-    if(def.data === id) {
-        return {ok: false, message: '当前预设已经是默认选项'}
-    }
-    let dbData = utools.db.get(id)
-    dbData.data = Object.assign(obj, {aquChecked: true})
-    let res = utools.db.put(dbData)
-    if (res.ok) {
-        if (def) {
-            // 删除之前的
-            let defRes = utools.db.get(def.data)
-            if(defRes){
-                defRes.data.aquChecked = false
-                utools.db.put(defRes)
-            }
-            // 保存新的id
-            def.data = id
-            return utools.db.put(def)
-        } else {
-            return utools.db.put({'_id': defId, 'data': id})
-        }
-
-    } else {
-        return res
-    }
-}
-
 // 读取预设
 window.aquGet = (id) => {
     return utools.db.get(id)
