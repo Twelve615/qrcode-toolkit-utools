@@ -4,9 +4,28 @@
 	"preload": "preload.js",
 	"features": [
 		{
-			"code": "qrKit",
+			"code": "qrCodeKit",
 			"explain": "二维码工具箱",
-			"cmds":["qr", "qrcode", "qrToolkit", "qrkit"]
+			"cmds":[
+				"qr", "qrcode", "qrk", "qrcodeKit"
+			]
+		},
+		{
+			"code": "genQrCode",
+			"explain": "生成二维码",
+			"cmds":[
+				{
+					"type": "over",
+					"label": "生成二维码",
+					"minLength": 1
+				},
+				{
+					"type": "regex",
+					"label": "生成二维码",
+					"match": "/(.*)/",
+					"minLength": 1
+				}
+			]
 		}
 	]
 }
