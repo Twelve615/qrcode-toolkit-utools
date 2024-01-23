@@ -4,8 +4,8 @@ const presetPrefix = 'AFQRT-U';
 const presetLabel = 'aquLabel'
 // 预设值
 const presetValue = 'aquValue'
-// 默认值标志位
-const defId = 'aquDefId'
+// 输入内容
+let enterData = {}
 
 // 获取预设id
 function getPresetId() {
@@ -68,6 +68,10 @@ window.aquAllOption = () => {
     return all;
 }
 
+window.aquGetEnterData = () => {
+    return enterData
+}
+
 // 从数据库中读取所有数据
 function getAllData() {
     let allData = utools.db.allDocs(presetPrefix);
@@ -79,3 +83,8 @@ function getAllData() {
 window.ubOpen = (url) => {
     utools.shellOpenExternal(url)
 }
+// --------------------------------------------
+utools.onPluginEnter(({code, type, payload, option}) => {
+    console.log('用户进入插件应用', code, type, payload)
+    enterData = {code, type, payload, option};
+})

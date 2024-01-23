@@ -56,6 +56,19 @@ useEventListener(window, 'message', (event) => {
 // eslint-disable-next-line no-console
 console.log('State', state.value)
 
+const isFirst = ref(true)
+onBeforeMount(() => {
+  if (isFirst) {
+    // 设置插件进入时所附带的值
+    const aquGetEnterData = window.aquGetEnterData()
+    if (aquGetEnterData) {
+      if (aquGetEnterData?.type === 'over')
+        state.value.qrcode.text = aquGetEnterData.payload
+    }
+    isFirst.value = false
+  }
+})
+
 onMounted(() => {
   // send message to parent window to let it know we're ready
   sendParentEvent('init', {})
