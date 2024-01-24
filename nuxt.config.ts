@@ -14,8 +14,8 @@ export default defineNuxtConfig({
   router: {
     options: {
       // 解决spa构建之后在utools中首次进入时访问的路径是绝对路径的问题
-      hashMode: true
-    }
+      hashMode: true,
+    },
   },
   experimental: {
     payloadExtraction: false,

@@ -7,6 +7,7 @@ if (view.value === 'scan')
 if (!['generator', 'compare', 'credit', 'verify', 'camera'].includes(view.value))
   view.value = 'generator'
 
-watchEffect(() => {
-  location.hash = view.value
-})
+// 这将会导致：Page not found 404
+// watchEffect(() => {
+//   location.hash = view.value
+// })
