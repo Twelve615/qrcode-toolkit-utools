@@ -33,3 +33,36 @@ export function getAverageColor(data: ImageData): [number, number, number, numbe
 export function rgbaToHex(r: number, g: number, b: number, a: number) {
   return `#${[r, g, b, a].map(c => c.toString(16).padStart(2, '0')).join('')}`
 }
+
+export async function base64ToImageElement(base64String: string): Promise<HTMLImageElement> {
+  // 创建一个blob对象
+  const blob = await new Promise<Blob>((resolve) => {
+    const binaryString = window.atob(base64String.split(',')[1])
+    const arrayBuffer = new ArrayBuffer(binaryString.length)
+    const uint8Array = new Uint8Array(arrayBuffer)
+
+    for (let i = 0; i < binaryString.length; i++) {
+      uint8Array[i] = binaryString.charCodeAt(i)
+    }
+
+    resolve(new Blob([uint8Array], { type: 'image/png' }))
+  })
+
+  // 创建一个指向blob的URL
+  const imageUrl = URL.createObjectURL(blob)
+
+  // 创建一个新的Image元素并设置其源为生成的URL
+  const imageElement = new Image()
+  imageElement.src = imageUrl
+
+  // 添加加载完成的监听器，确保图片已经加载完成
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    imageElement.onload = () => {
+      resolve(imageElement)
+    }
+    imageElement.onerror = (error) => {
+      URL.revokeObjectURL(imageUrl)
+      reject(error)
+    }
+  })
+}

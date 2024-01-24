@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { deepMerge } from '@antfu/utils'
-import UtoolsPresetManagement from "~/components/UtoolsPresetManagement.vue";
+import type { ScanResult } from 'qr-scanner-wechat'
+import { scan } from 'qr-scanner-wechat'
+import UtoolsPresetManagement from '~/components/UtoolsPresetManagement.vue'
 import { sendParentEvent } from '~/logic/messaging'
 import { dataUrlScannerUpload, defaultState, hasParentWindow, isLargeScreen, showGridHelper, storeIndex } from '~/logic/state'
 import { view } from '~/logic/view'
 import type { State } from '~/logic/types'
+import { base64ToImageElement } from '~/logic/image'
 
 defineProps<{
   index: number
@@ -57,6 +60,7 @@ useEventListener(window, 'message', (event) => {
 console.log('State', state.value)
 
 const isFirst = ref(true)
+const result = ref<ScanResult>()
 onBeforeMount(() => {
   if (isFirst) {
     // 设置插件进入时所附带的值
@@ -64,10 +68,30 @@ onBeforeMount(() => {
     if (aquGetEnterData) {
       if (aquGetEnterData?.type === 'over')
         state.value.qrcode.text = aquGetEnterData.payload
+      if (aquGetEnterData?.type === 'img') {
+        const base64ImageString = aquGetEnterData.payload
+        // eslint-disable-next-line no-console
+        console.log(base64ImageString)
+        scanImg(base64ImageString)
+        if (result.value?.text)
+          state.value.qrcode.text = result.value.text
+      }
     }
     isFirst.value = false
   }
 })
+
+async function scanImg(base64ImageString: string) {
+  try {
+    const imageElement = await base64ToImageElement(base64ImageString)
+    result.value = await scan(imageElement)
+    // eslint-disable-next-line no-console
+    console.log(`扫描结果：${result.value}`)
+  }
+  catch (e) {
+    console.error(e)
+  }
+}
 
 onMounted(() => {
   // send message to parent window to let it know we're ready

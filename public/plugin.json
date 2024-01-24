@@ -21,12 +21,6 @@
 					"type": "over",
 					"label": "生成二维码",
 					"minLength": 1
-				},
-				{
-					"type": "regex",
-					"label": "生成二维码",
-					"match": "/(.*)/",
-					"minLength": 1
 				}
 			]
 		}
