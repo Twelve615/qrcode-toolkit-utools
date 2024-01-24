@@ -1,17 +1,11 @@
-# Anthony's QR Toolkit
+# Anthony's QR Toolkit - Utools
+在学习AI生成二维码的过程中发现了这个项目，我觉得很有意思，在某些场景下也很有用，于是就把它做成了utools插件，方便大家使用。
+原项目主要是用于AICG的二维码的工具包，能够生成基本二维码，并与输出进行比较以查找未对齐的像素。
+在utools插件中基于原功能对增加了以下的内容：
+-[x] 📖汉化主页内容
+-[x] 🗂️增加预设功能可以在utools中保存多个预设切换使用
+-[x] 📝在utools中输入文本后转换成二维码
+-[ ] 🎭在utools中输入二维码图片后生成新的二维码
+-[x] 🎟️复制生成的二维码图片到剪贴板
 
-A toolkit mainly for AI-Generated QR Codes, with the ability to generate base QR codes, and compare with the output to find misaligned pixels.
-
-👋 Walkthrough Guide - [Refining AI Generated QR Code](https://antfu.me/posts/ai-qrcode-refine)
-
-📸 Go to the App - [qrcode.antfu.me](https://qrcode.antfu.me)
-
-<img alt="Screenshot" src="https://antfu.me/images/ai-qrcode-refine-compare-2.png">
-
-## Stable Diffusion Web UI Extension
-
-This app also provides [Stable Diffusion Web UI](https://github.com/AUTOMATIC1111/stable-diffusion-webui) integration. Please go to [antfu/sd-webui-qrcode-toolkit](https://github.com/antfu/sd-webui-qrcode-toolkit) for more details.
-
-## License
-
-MIT
+感谢 [Anthony's QR Toolkit](https://github.com/antfu/qrcode-toolkit)
