@@ -31,7 +31,7 @@ function clear() {
         Upload
       </div>
     </template>
-    <button v-if="value" absolute right-0 top-0 z-20 m1 rounded-full bg-hex-8882 p1 op50 hover:op75 title="Remove image">
+    <button v-if="value" absolute right-0 top-0 z-20 m1 rounded-full bg-base border-base p1 op75 hover:op95 title="Remove image">
       <div i-carbon-close @click="clear" />
     </button>
     <ImageUpload v-model="value" />
