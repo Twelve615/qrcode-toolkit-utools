@@ -94,8 +94,6 @@ window.utools.onPluginEnter((aquGetEnterData: any) => {
     }
     if (aquGetEnterData?.type === 'img') {
       const base64ImageString = aquGetEnterData.payload
-      // eslint-disable-next-line no-console
-      console.log(base64ImageString)
       scanImg(base64ImageString)
       if (result.value?.text)
         state.value.qrcode.text = result.value.text
