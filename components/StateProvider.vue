@@ -84,11 +84,9 @@ onBeforeMount(() => {
 // 临时解决不退出插件的情况下无法获取到选中文本的问题（fixme: 后续优化）
 const useSelectText = ref('')
 window.utools.onPluginEnter((aquGetEnterData: any) => {
-  console.log('用户进入插件应用', aquGetEnterData.code, aquGetEnterData.type, aquGetEnterData.payload)
   // 设置插件进入时所附带的值
   if (aquGetEnterData) {
     if (aquGetEnterData.type === 'over') {
-      console.log(`内部：${useSelectText.value}`)
       if (useSelectText.value !== aquGetEnterData.payload) {
         useSelectText.value = aquGetEnterData.payload
         state.value.qrcode.text = aquGetEnterData.payload
