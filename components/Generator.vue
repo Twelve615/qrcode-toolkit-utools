@@ -17,6 +17,7 @@ const uploadTarget = ref<'image' | 'qrcode'>()
 const state = computed(() => props.state.qrcode)
 const rightPanelRect = reactive(useElementBounding(rightPanelEl))
 const floating = computed(() => rightPanelRect.top < 10 && isLargeScreen.value)
+const { $toast } = useNuxtApp()
 
 const canvas = ref<HTMLCanvasElement>()
 
@@ -36,8 +37,17 @@ function download() {
   a.click()
 }
 
+function copyQrCode() {
+  if (!canvas.value)
+    return
+  const b = window.copyImgToClipboard(dataUrlGeneratedQRCode.value!)
+  if (b)
+    $toast.success('复制成功')
+  else
+    $toast.error('复制失败')
+}
+
 function reset() {
-  // eslint-disable-next-line no-alert
   // Are you sure to reset all state?
   if (confirm('您确定重置所有状态吗？'))
     Object.assign(state.value, defaultGeneratorState())
@@ -72,7 +82,7 @@ async function readState(e: Event) {
   const text = await promise
   try {
     const data = JSON.parse(text)
-    // eslint-disable-next-line no-alert
+
     // Are you sure to override the state with file uploaded?
     if (confirm('您确定使用上传的文件覆盖状态吗？')) {
       const keys = Object.keys(state.value)
@@ -84,7 +94,6 @@ async function readState(e: Event) {
     }
   }
   catch (e) {
-    // eslint-disable-next-line no-alert
     // Invalid JSON file
     alert('无效的JSON文件')
   }
@@ -199,7 +208,7 @@ watch(
 
 <template>
   <!-- 移除 lt-lg="flex flex-col-reverse" 这会使窗口较小时二维码占整个窗口 -->
-  <div grid="~ cols-[38rem_1fr] gap-2" >
+  <div grid="~ cols-[38rem_1fr] gap-2">
     <div flex="~ col gap-2">
       <!-- Text to encode -->
       <textarea
@@ -347,7 +356,7 @@ watch(
             >
             <div i-ri-upload-line z-1 />
             <div z-1>
-            <!-- Upload -->
+              <!-- Upload -->
               上传
             </div>
             <ImageUpload v-model="state.backgroundImage" />
@@ -532,6 +541,13 @@ watch(
             </div>
           </div>
         </div>
+        <button
+          py2 text-sm text-button
+          @click="copyQrCode()"
+        >
+          <div i-ri-file-copy-line />
+          复制
+        </button>
         <button
           py2 text-sm text-button
           @click="download()"

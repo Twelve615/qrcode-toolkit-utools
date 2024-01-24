@@ -78,6 +78,10 @@ function getAllData() {
     return allData ? allData : [];
 }
 
+window.copyImgToClipboard = (base64Img) => {
+    return utools.copyImage(base64Img)
+}
+
 // --------------------------------------------
 // 打开浏览器
 window.ubOpen = (url) => {
